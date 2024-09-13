@@ -11,4 +11,5 @@
     <string name="setup_your_browser_and_try_again">Setup your browser and try again</string>
     <string name="the_url_you_entered_is_invalid">The url you entered is invalid</string>
     <string name="news_details">News Details</string>
+    <string name="deleted_news_message">News has been deleted successfully</string>
 </resources>

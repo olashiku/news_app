@@ -15,8 +15,8 @@ interface ArticleDao {
     fun getArticles():LiveData<List<ArticleData>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun saveArticle(country:ArticleData)
+    suspend fun saveArticle(article:ArticleData)
 
     @Delete
-    suspend fun deleteArticle(country: ArticleData)
+    suspend fun deleteArticle(article: ArticleData)
 }

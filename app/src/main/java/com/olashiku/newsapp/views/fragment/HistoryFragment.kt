@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.olashiku.newsapp.R
 import com.olashiku.newsapp.databinding.FragmentHistoryBinding
 import com.olashiku.newsapp.model.news_response.Article
@@ -35,6 +37,7 @@ class HistoryFragment : BaseFragment() {
         showBottomNavigationView(true)
         setupView()
         setupSearch()
+        setupSwipeAction()
     }
 
     fun setupSearch() {
@@ -71,6 +74,31 @@ class HistoryFragment : BaseFragment() {
         }
         binding.historyRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.historyRecycler.adapter = adapter
+    }
+
+    private fun setupSwipeAction() {
+        val itemTouchHelperCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.adapterPosition
+                    viewModel.deleteArticle(article.get(position))
+                    showToast(getString(R.string.deleted_news_message))
+                }
+
+
+            }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.historyRecycler)
+
     }
 
 }
